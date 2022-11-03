@@ -6,7 +6,14 @@ import menuIcon from "../assets/menu.svg";
 // styles
 import styles from "../styles/Header.module.scss";
 
-function Header({ onChange, inputSearch, isModalOpen, setIsModalOpen }) {
+function Header({
+  cars,
+  searchResults,
+  onChange,
+  inputData,
+  isModalOpen,
+  setIsModalOpen,
+}) {
   function clickHandler() {
     setIsModalOpen(prevData => !prevData);
   }
@@ -15,13 +22,19 @@ function Header({ onChange, inputSearch, isModalOpen, setIsModalOpen }) {
     <header className={styles.header}>
       <div className={styles.titleContainer}>
         <h1>Available Cars</h1>
-        <p>There are 15 cars that match your criteria</p>
+        <p>
+          There{" "}
+          {searchResults.length === 1 || cars.length === 1 ? "is " : "are "}
+          {searchResults.length > 0 ? searchResults.length : cars.length}{" "}
+          {searchResults.length === 1 || cars.length === 1 ? "car " : "cars "}
+          that match your criteria
+        </p>
       </div>
       <form className={styles.form}>
         <input
           className={styles.searchInput}
           onChange={onChange}
-          value={inputSearch.search}
+          value={inputData.search}
           id="search"
           name="search"
           type="text"
@@ -40,7 +53,7 @@ function Header({ onChange, inputSearch, isModalOpen, setIsModalOpen }) {
               type="checkbox"
               id="isUsed"
               name="isUsed"
-              value={inputSearch.isUsed}
+              value={inputData.isUsed}
               onChange={onChange}
             ></input>
             <label htmlFor="isUsed">Used Cars</label>
@@ -51,7 +64,7 @@ function Header({ onChange, inputSearch, isModalOpen, setIsModalOpen }) {
               type="checkbox"
               id="isNew"
               name="isNew"
-              value={inputSearch.isNew}
+              value={inputData.isNew}
               onChange={onChange}
             ></input>
             <label htmlFor="isNew">New Cars</label>
@@ -62,7 +75,7 @@ function Header({ onChange, inputSearch, isModalOpen, setIsModalOpen }) {
               type="checkbox"
               id="isFavorite"
               name="isFavorite"
-              value={inputSearch.isFavorite}
+              value={inputData.isFavorite}
               onChange={onChange}
             ></input>
             <label htmlFor="isFavorite">Favorite</label>

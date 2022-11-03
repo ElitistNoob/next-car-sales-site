@@ -5,10 +5,12 @@ import Head from "next/head";
 import Header from "../components/Header";
 // components
 import Listing from "../components/Listing";
+// Data
+import { carsList } from "../data/carsData.js";
 
 export default function Home() {
-  const [cars, setCars] = useState([]);
-  const [inputSearch, setinputSearch] = useState({
+  const [cars, setCars] = useState(carsList);
+  const [inputData, setInputData] = useState({
     search: "",
     isNew: false,
     isUsed: false,
@@ -17,27 +19,14 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    try {
-      const fetchCars = async () => {
-        const res = await fetch("/api");
-        const data = await res.json();
-        setCars(data);
-      };
-      return fetchCars;
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
-
   function changeHandler(event) {
     const { value, name, type, checked } = event.target;
     const checkType = type === "checkbox" ? checked : value;
-    setinputSearch(prevData => ({ ...prevData, [name]: checkType }));
+    setInputData(prevData => ({ ...prevData, [name]: checkType }));
 
     const resultsArray = cars.filter(car =>
       type !== "checkbox"
-        ? car.title.toLowerCase().includes(inputSearch.search.toLowerCase())
+        ? car.title.toLowerCase().includes(inputData.search.toLowerCase())
         : (checked && name === car.condition) || (checked && car.liked)
     );
     setSearchResults(resultsArray);
@@ -68,15 +57,12 @@ export default function Home() {
         <Header
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          inputSearch={inputSearch}
+          inputData={inputData}
           onChange={changeHandler}
-        />
-        <Listing
           cars={cars}
-          setCars={setCars}
-          inputSearch={inputSearch}
           searchResults={searchResults}
         />
+        <Listing cars={cars} setCars={setCars} searchResults={searchResults} />
       </main>
     </>
   );

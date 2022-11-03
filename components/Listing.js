@@ -1,5 +1,3 @@
-// Hooks
-import useWindowwidth from "../hooks/useWindowWidth";
 // Styles
 import styles from "../styles/Listing.module.scss";
 // Assets
