@@ -1,0 +1,86 @@
+@import 'colors';
+
+.container {
+  max-width: 580px;
+  margin-top: 2em;
+  margin-inline: auto;
+
+  @media (min-width: 980px) {
+    max-width: 1440px;
+  }
+}
+
+.labels {
+  display: none;
+  grid-template-columns: 1.25fr 1.125fr 1fr auto;
+  justify-content: space-between;
+  background-color: $accent-clr;
+  text-transform: uppercase;
+  list-style-type: none;
+  padding: 1em 1.5em;
+  border-radius: 6px;
+
+  @media (min-width: 980px) {
+    display: grid;
+  }
+
+  li {
+    color: $light-clr;
+  }
+}
+
+.carList {
+  display: grid;
+  grid-template-areas:
+    'title title'
+    'location location'
+    'price like';
+  padding: 1rem;
+  border-radius: 6px;
+  margin: -1em -1em 2em;
+
+  @media (min-width: 980px) {
+    grid-template-columns: 1.2fr 1.125fr 1fr auto;
+    grid-template-areas: "title location price like";
+    margin: unset;
+    margin-bottom: 1em;
+  }
+
+  &:hover {
+    background-color: $light-clr;
+  }
+
+  * {
+    margin: 0;
+  }
+}
+
+.title {
+  grid-area: title;
+  margin-bottom: .725em;
+
+  @media (min-width: 980px) {
+      margin-bottom: 0;
+  }
+}
+
+
+.location {
+  grid-area: location;
+  margin-bottom: 1.325em;
+
+  @media (min-width: 980px) {
+      margin-bottom: 0;
+  }
+}
+
+.price {
+  grid-area: price;
+  color: $primary-clr;
+}
+
+.like {
+  grid-area: like;
+  justify-self: end;
+  cursor: pointer;
+}
