@@ -17,6 +17,22 @@ function Header({ onChange, inputSearch, isModalOpen, setIsModalOpen }) {
         <h1>Available Cars</h1>
         <p>There are 15 cars that match your criteria</p>
       </div>
+      <form className={styles.form}>
+        <input
+          className={styles.searchInput}
+          onChange={onChange}
+          value={inputSearch.search}
+          id="search"
+          name="search"
+          type="text"
+        />
+        <Image
+          className="optionBtn"
+          onClick={clickHandler}
+          src={menuIcon}
+          alt=""
+        ></Image>
+      </form>
       {isModalOpen && (
         <div className={styles.optionsMenu}>
           <div>
@@ -53,21 +69,6 @@ function Header({ onChange, inputSearch, isModalOpen, setIsModalOpen }) {
           </div>
         </div>
       )}
-      <form className={styles.form}>
-        <input
-          onChange={onChange}
-          value={inputSearch.search}
-          id="search"
-          name="search"
-          type="text"
-        />
-        <Image
-          className="optionBtn"
-          onClick={clickHandler}
-          src={menuIcon}
-          alt=""
-        ></Image>
-      </form>
     </header>
   );
 }

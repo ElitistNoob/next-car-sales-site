@@ -6,7 +6,6 @@ import styles from "../styles/Listing.module.scss";
 import Car from "./Car";
 
 function Listing({ cars, setCars, searchResults }) {
-
   function updateLikeStatus(id) {
     const updateLike = cars.map(car => {
       if (id === car.id) {

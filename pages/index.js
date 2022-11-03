@@ -43,24 +43,28 @@ export default function Home() {
     setSearchResults(resultsArray);
   }
 
-  function mouseUpHandler(event) {
-    const { className, tagName } = event.target;
-    if (
-      isModalOpen &&
-      className !== "Header_optionsMenu__b3AaW" &&
-      className !== "optionBtn" &&
-      tagName !== "LABEL" &&
-      tagName !== "INPUT"
-    )
-      setIsModalOpen(false);
-  }
+  useEffect(() => {
+    function mouseUpHandler(event) {
+      const { className, tagName } = event.target;
+      if (
+        isModalOpen &&
+        className !== "Header_optionsMenu__b3AaW" &&
+        className !== "optionBtn" &&
+        tagName !== "LABEL" &&
+        tagName !== "INPUT"
+      )
+        setIsModalOpen(false);
+    }
+    document.body.addEventListener("mouseup", mouseUpHandler);
+    return () => document.body.removeEventListener("mouseup", mouseUpHandler);
+  }, [isModalOpen]);
 
   return (
     <>
       <Head>
         <title>#1 used cars site</title>
       </Head>
-      <main onMouseUp={mouseUpHandler}>
+      <main>
         <Header
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
