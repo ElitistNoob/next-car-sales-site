@@ -20,6 +20,7 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function changeHandler(event) {
+    event.preventDefault();
     const { value, name, type, checked } = event.target;
     const checkType = type === "checkbox" ? checked : value;
     setInputData(prevData => ({ ...prevData, [name]: checkType }));
