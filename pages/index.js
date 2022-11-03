@@ -20,7 +20,9 @@ export default function Home() {
   useEffect(() => {
     try {
       const fetchCars = async () => {
-        const res = await fetch("https://next-car-sales-site.vercel.app/api");
+        const res = await fetch(
+          "https://next-car-sales-site-19km3ovbu-elitistnoob.vercel.app/api"
+        );
         const data = await res.json();
         setCars(data);
       };
