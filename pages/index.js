@@ -20,9 +20,7 @@ export default function Home() {
   useEffect(() => {
     try {
       const fetchCars = async () => {
-        const res = await fetch(
-          "https://next-car-sales-site-19km3ovbu-elitistnoob.vercel.app/api"
-        );
+        const res = await fetch("/api");
         const data = await res.json();
         setCars(data);
       };
@@ -46,11 +44,13 @@ export default function Home() {
   }
 
   function mouseUpHandler(event) {
-    const { className } = event.target;
+    const { className, tagName } = event.target;
     if (
       isModalOpen &&
       className !== "Header_optionsMenu__b3AaW" &&
-      className !== "optionBtn"
+      className !== "optionBtn" &&
+      tagName !== "LABEL" &&
+      tagName !== "INPUT"
     )
       setIsModalOpen(false);
   }
