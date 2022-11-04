@@ -1,8 +1,6 @@
 // Hooks
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-// Assets
-import menuIcon from "../assets/menu.svg";
 // styles
 import styles from "../styles/Header.module.scss";
 
@@ -45,12 +43,7 @@ function Header({
           type="text"
           disabled={isModalOpen}
         />
-        <Image
-          className="optionBtn"
-          onClick={onClick}
-          src={menuIcon}
-          alt=""
-        ></Image>
+        <Image className="optionBtn" onClick={onClick} alt=""></Image>
       </form>
       {isModalOpen && (
         <div className={styles.optionsMenu}>

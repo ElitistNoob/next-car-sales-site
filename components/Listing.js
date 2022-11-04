@@ -3,7 +3,7 @@ import styles from "../styles/Listing.module.scss";
 // Assets
 import Car from "./Car";
 
-function Listing({ cars, setCars }) {
+function Listing({ cars, setCars, setIsFavorite }) {
   function updateLikeStatus(id) {
     const updateLike = cars.map(car => {
       if (id === car.id) {
@@ -12,6 +12,9 @@ function Listing({ cars, setCars }) {
       return car;
     });
     setCars(updateLike);
+
+    const favoriteCars = updateLike.filter(car => car.liked);
+    setIsFavorite(favoriteCars);
   }
 
   const carPost = cars.map(car => (
