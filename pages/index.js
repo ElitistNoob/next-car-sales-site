@@ -9,6 +9,7 @@ import Listing from "../components/Listing";
 import { carsList } from "../data/carsData.js";
 
 export default function Home() {
+  // States
   const [cars, setCars] = useState(carsList);
   const [inputData, setInputData] = useState({
     search: "",
@@ -16,23 +17,31 @@ export default function Home() {
     isUsed: false,
     isFavorite: false,
   });
-  const [searchResults, setSearchResults] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eventType, setEventType] = useState("");
 
+  // onChange eventListener on Inputs
   function changeHandler(event) {
-    event.preventDefault();
     const { value, name, type, checked } = event.target;
-    const checkType = type === "checkbox" ? checked : value;
-    setInputData(prevData => ({ ...prevData, [name]: checkType }));
+
+    const eventValue = type === "checkbox" ? checked : value;
+
+    setInputData(prevData => ({ ...prevData, [name]: eventValue }));
 
     const resultsArray = cars.filter(car =>
-      type !== "checkbox"
-        ? car.title.toLowerCase().includes(inputData.search.toLowerCase())
-        : (checked && name === car.condition) || (checked && car.liked)
+      type === "checkbox" && checked
+        ? name === car.condition || car.liked
+        : car.title.toLowerCase().includes(inputData.search.toLowerCase())
     );
-    setSearchResults(resultsArray);
+
+    type === "checkbox" ? setEventType("criteria") : setEventType("search");
+
+    (isModalOpen && !checked) || (!isModalOpen && !value)
+      ? setCars(carsList)
+      : setCars(resultsArray);
   }
 
+  // onMouseUp eventListener body
   useEffect(() => {
     function mouseUpHandler(event) {
       const { className, tagName } = event.target;
@@ -49,6 +58,11 @@ export default function Home() {
     return () => document.body.removeEventListener("mouseup", mouseUpHandler);
   }, [isModalOpen]);
 
+  // onClick eventListener for dot menu
+  function clickHandler() {
+    setIsModalOpen(prevData => !prevData);
+  }
+
   return (
     <>
       <Head>
@@ -57,13 +71,13 @@ export default function Home() {
       <main>
         <Header
           isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
+          onClick={clickHandler}
           inputData={inputData}
           onChange={changeHandler}
           cars={cars}
-          searchResults={searchResults}
+          eventType={eventType}
         />
-        <Listing cars={cars} setCars={setCars} searchResults={searchResults} />
+        <Listing cars={cars} setCars={setCars} />
       </main>
     </>
   );

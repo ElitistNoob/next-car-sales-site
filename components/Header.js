@@ -1,5 +1,5 @@
 // Hooks
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 // Assets
 import menuIcon from "../assets/menu.svg";
@@ -8,40 +8,46 @@ import styles from "../styles/Header.module.scss";
 
 function Header({
   cars,
-  searchResults,
   onChange,
   inputData,
   isModalOpen,
-  setIsModalOpen,
+  onClick,
+  eventType,
 }) {
-  function clickHandler() {
-    setIsModalOpen(prevData => !prevData);
+  function searchResultText() {
+    if (cars.length < 1) {
+      return "No cars found";
+    }
+    if (cars.length === 1) {
+      return `Found 1 car based on your ${eventType}`;
+    }
+    if (cars.length > 1) {
+      return `Found ${cars.length} cars based on your criteria`;
+    }
   }
 
   return (
     <header className={styles.header}>
       <div className={styles.titleContainer}>
         <h1>Available Cars</h1>
-        <p>
-          There{" "}
-          {searchResults.length === 1 || cars.length === 1 ? "is " : "are "}
-          {searchResults.length > 0 ? searchResults.length : cars.length}{" "}
-          {searchResults.length === 1 || cars.length === 1 ? "car " : "cars "}
-          that match your criteria
-        </p>
+        <p>{searchResultText()}</p>
       </div>
       <form className={styles.form}>
         <input
           className={styles.searchInput}
+          style={{
+            backgroundBlendMode: isModalOpen ? "lighten" : "unset",
+          }}
           onChange={onChange}
           value={inputData.search}
           id="search"
           name="search"
           type="text"
+          disabled={isModalOpen}
         />
         <Image
           className="optionBtn"
-          onClick={clickHandler}
+          onClick={onClick}
           src={menuIcon}
           alt=""
         ></Image>
