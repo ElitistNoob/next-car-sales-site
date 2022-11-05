@@ -1,5 +1,5 @@
 // hooks
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 // react components
 import Head from "next/head";
 import Header from "../components/Header";
@@ -19,19 +19,19 @@ export default function Home() {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eventType, setEventType] = useState("");
-  // use State to get favorites to endure even after search
   const [isFavorite, setIsFavorite] = useState([]);
-
-  // To delete - Used to text
-  useEffect(() => {
-    console.log(isFavorite);
-  }, [isFavorite]);
 
   function changeHandler(event) {
     const { value, name, type, checked } = event.target;
     const eventValue = type === "checkbox" ? checked : value;
 
     setInputData(prevData => ({ ...prevData, [name]: eventValue }));
+
+    const resultsArray = cars.filter(car =>
+      type === "checkbox" && checked
+        ? name === car.condition || car.liked
+        : car.title.toLowerCase().includes(inputData.search.toLowerCase())
+    );
 
     const syncFavorites = arr =>
       arr.map(car => {
@@ -44,17 +44,20 @@ export default function Home() {
         return car;
       });
 
-    const resultsArray = cars.filter(car =>
-      type === "checkbox" && checked
-        ? name === car.condition || car.liked
-        : car.title.toLowerCase().includes(inputData.search.toLowerCase())
-    );
-
     type === "checkbox" ? setEventType("criteria") : setEventType("search");
 
     (isModalOpen && !checked) || (!isModalOpen && !value)
       ? setCars(() => syncFavorites(carsList))
-      : setCars(() => syncFavorites(resultsArray));
+      : setCars(() => {
+          if (name === "search") {
+            return syncFavorites(resultsArray);
+          }
+          return syncFavorites(
+            resultsArray.filter(result =>
+              name !== "isFavorite" ? result.condition === name : result
+            )
+          );
+        });
   }
 
   // onMouseUp eventListener body

@@ -52,7 +52,7 @@ function Header({
               type="checkbox"
               id="isUsed"
               name="isUsed"
-              value={inputData.isUsed}
+              checked={inputData.isUsed}
               onChange={onChange}
             ></input>
             <label htmlFor="isUsed">Used Cars</label>
@@ -63,7 +63,7 @@ function Header({
               type="checkbox"
               id="isNew"
               name="isNew"
-              value={inputData.isNew}
+              checked={inputData.isNew}
               onChange={onChange}
             ></input>
             <label htmlFor="isNew">New Cars</label>
@@ -74,7 +74,7 @@ function Header({
               type="checkbox"
               id="isFavorite"
               name="isFavorite"
-              value={inputData.isFavorite}
+              checked={inputData.isFavorite}
               onChange={onChange}
             ></input>
             <label htmlFor="isFavorite">Favorite</label>
