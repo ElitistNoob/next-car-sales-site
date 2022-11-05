@@ -20,7 +20,7 @@ function Header({
       return `Found 1 car based on your ${eventType}`;
     }
     if (cars.length > 1) {
-      return `Found ${cars.length} cars based on your criteria`;
+      return `Found ${cars.length} cars based on your ${eventType}`;
     }
   }
 
